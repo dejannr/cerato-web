@@ -25,14 +25,19 @@ export function HomePage() {
     </section>
 
     <section className="problem-section container section">
-      <SectionHeading eyebrow="The problem" title="Your business shouldn't run on workarounds." />
-      <div className="problem-content">
-        <p>Spreadsheets, messages, repeated data entry, manual calculations, information living in people&apos;s heads, and generic tools that almost fit.</p>
-        <p>These solutions can work for a while. But as the business grows, the workarounds become part of the problem.</p>
-        <p>Important processes become harder to control. Information gets fragmented. Employees repeat the same work. Decisions depend on finding the right message, spreadsheet, or person.</p>
-        <strong>We turn those workflows into software.</strong>
+      <p className="problem-rail eyebrow">The problem</p>
+      <div className="problem-main">
+        <h2>Your business shouldn&apos;t run on workarounds.</h2>
+        <div className="problem-lower">
+          <div className="problem-content">
+            <p>Spreadsheets, messages, repeated data entry, manual calculations, information living in people&apos;s heads, and generic tools that almost fit.</p>
+            <p>These solutions can work for a while. But as the business grows, the workarounds become part of the problem.</p>
+            <p>Important processes become harder to control. Information gets fragmented. Employees repeat the same work. Decisions depend on finding the right message, spreadsheet, or person.</p>
+            <strong>We turn those workflows into software.</strong>
+          </div>
+          <FragmentedToConnected />
+        </div>
       </div>
-      <FragmentedToConnected />
     </section>
 
     <section className="section container">
