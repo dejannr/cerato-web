@@ -2,6 +2,7 @@ import Link from "next/link";
 import { caseStudies } from "@/content/case-studies";
 import { ArrowRight, ArrowUpRight } from "@untitledui/icons";
 import { CaseStudyCard, FinalCta, SectionHeading } from "@/components/shared/site-components";
+import { HeroActivity } from "@/components/home/hero-activity";
 
 const capabilities = [
   ["Operational platforms", "Bring people, workflows, business rules, and operational data into one purpose-built system.", ["People", "Workflows", "Business rules", "Operational data"]],
@@ -89,12 +90,7 @@ function OperationalSystemVisual() {
         <div className="record-row"><small>Driver</small><strong>D. Williams</strong><em>Assigned</em></div>
         <footer><i /> Status updated</footer>
       </div>
-      <div className="activity-strip">
-        <header>Activity</header>
-        <p><time>08:27</time> Request received</p>
-        <p><time>08:29</time> Driver assigned</p>
-        <p><time>08:30</time> Payment verified</p>
-      </div>
+      <HeroActivity />
     </div>
   </div>;
 }
