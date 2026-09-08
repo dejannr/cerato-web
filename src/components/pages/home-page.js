@@ -3,6 +3,7 @@ import { caseStudies } from "@/content/case-studies";
 import { ArrowRight, ArrowUpRight } from "@untitledui/icons";
 import { CaseStudyCard, FinalCta, SectionHeading } from "@/components/shared/site-components";
 import { HeroActivity } from "@/components/home/hero-activity";
+import { CapabilityRailProgress } from "@/components/home/capability-rail-progress";
 
 const capabilities = [
   ["Operational platforms", "Bring people, workflows, business rules, and operational data into one purpose-built system.", ["People", "Workflows", "Business rules", "Operational data"]],
@@ -43,7 +44,8 @@ export function HomePage() {
 
     <section className="section container">
       <SectionHeading eyebrow="What we build" title="Systems designed around the operation."><p>We build software for businesses whose processes are too important, too specific, or too complex to keep forcing into generic tools.</p></SectionHeading>
-      <div className="capability-grid" tabIndex={0} aria-label="What we build capabilities; swipe or scroll horizontally on mobile">{capabilities.map(([title, body, nodes], index) => <article className="capability" key={title}><span>0{index + 1}</span><div className="capability-visual"><CapabilityDiagram title={title} nodes={nodes} /></div><div className="capability-copy"><h3>{title}</h3><p>{body}</p></div></article>)}</div>
+      <div className="capability-grid" id="capability-rail" tabIndex={0} aria-label="What we build capabilities; swipe or scroll horizontally on mobile">{capabilities.map(([title, body, nodes], index) => <article className="capability" key={title}><span>0{index + 1}</span><div className="capability-visual"><CapabilityDiagram title={title} nodes={nodes} /></div><div className="capability-copy"><h3>{title}</h3><p>{body}</p></div></article>)}</div>
+      <CapabilityRailProgress />
       <Link className="text-link section-link" href="/services">Explore our services <ArrowRight /></Link>
     </section>
 
