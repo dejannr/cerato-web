@@ -26,7 +26,7 @@ export function SiteHeader() {
     };
   }, [open]);
 
-  return <header className="site-header"><div className="container nav-inner">
+  return <header className={open ? "site-header site-header--menu-open" : "site-header"}><div className="container nav-inner">
     <Link className={pathname === "/" ? "wordmark wordmark--active" : "wordmark"} href="/" aria-label="Cerato Systems home" aria-current={pathname === "/" ? "page" : undefined}><img src="/brand/cerato-systems-logo.png" alt="Cerato Systems" /></Link>
     <nav id={menuId} className={open ? "nav-links nav-links--open" : "nav-links"} aria-label="Main navigation">{navItems.map(([label, href]) => <Link className={isActive(href) ? "nav-link nav-link--active" : "nav-link"} href={href} key={href} aria-current={isActive(href) ? "page" : undefined} onClick={() => setOpen(false)}>{label}</Link>)}<Link className={pathname === "/contact" ? "mobile-project-link nav-link--active" : "mobile-project-link"} href="/contact" aria-current={pathname === "/contact" ? "page" : undefined} onClick={() => setOpen(false)}>Start a project <ArrowUpRight /></Link></nav>
     <Link className={pathname === "/contact" ? "nav-cta nav-cta--active" : "nav-cta"} href="/contact" aria-current={pathname === "/contact" ? "page" : undefined}>Start a project <ArrowUpRight /></Link>

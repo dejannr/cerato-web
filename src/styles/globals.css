@@ -142,3 +142,8 @@ body{background:radial-gradient(circle at 50% -18%,rgba(94,106,210,.09),transpar
 
 .capability-rail-progress{display:none}
 @media(max-width:767px){.capability-rail-progress{display:flex;align-items:center;justify-content:center;gap:7px;height:22px;margin-top:14px}.capability-rail-progress span{width:4px;height:4px;border-radius:999px;background:#565a62;transition:width 180ms var(--ease),background 180ms var(--ease)}.capability-rail-progress span.is-active{width:22px;background:#b9c0ff}}
+
+/* The mobile menu always keeps its close control in view. */
+@media(max-width:767px){.site-header--menu-open{position:fixed!important;top:0;right:0;left:0;z-index:100;background:#08090a}.site-header--menu-open .menu-button{position:relative;z-index:102}.site-header--menu-open .nav-links--open{z-index:101}.menu-is-open{padding-top:60px}}
+
+@media(max-width:767px){.nav-links--open .nav-link{color:var(--muted)}.nav-links--open .nav-link--active{color:var(--fg)}.nav-links--open .nav-link--active:after{display:none}}
