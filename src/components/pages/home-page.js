@@ -2,6 +2,7 @@ import Link from "next/link";
 import { caseStudies } from "@/content/case-studies";
 import { ArrowRight, ArrowUpRight } from "@untitledui/icons";
 import { CaseStudyCard, FinalCta, SectionHeading } from "@/components/shared/site-components";
+import { Reveal } from "@/components/shared/reveal";
 import { HeroActivity } from "@/components/home/hero-activity";
 import { CapabilityRailProgress } from "@/components/home/capability-rail-progress";
 
@@ -27,8 +28,8 @@ export function HomePage() {
     </section>
 
     <section className="problem-section container section">
-      <p className="problem-rail eyebrow">The problem</p>
-      <div className="problem-main">
+      <Reveal className="problem-rail"><p className="eyebrow">The problem</p></Reveal>
+      <Reveal className="problem-main">
         <h2>Your business shouldn&apos;t run on workarounds.</h2>
         <div className="problem-lower">
           <div className="problem-content">
@@ -39,12 +40,12 @@ export function HomePage() {
           </div>
           <FragmentedToConnected />
         </div>
-      </div>
+      </Reveal>
     </section>
 
     <section className="section container">
       <SectionHeading eyebrow="What we build" title="Systems designed around the operation."><p>We build software for businesses whose processes are too important, too specific, or too complex to keep forcing into generic tools.</p></SectionHeading>
-      <div className="capability-grid" id="capability-rail" tabIndex={0} aria-label="What we build capabilities; swipe or scroll horizontally on mobile">{capabilities.map(([title, body, nodes], index) => <article className="capability" key={title}><span>0{index + 1}</span><div className="capability-visual"><CapabilityDiagram title={title} nodes={nodes} /></div><div className="capability-copy"><h3>{title}</h3><p>{body}</p></div></article>)}</div>
+      <Reveal className="capability-grid" id="capability-rail" tabIndex={0} aria-label="What we build capabilities; swipe or scroll horizontally on mobile">{capabilities.map(([title, body, nodes], index) => <article className="capability" key={title}><span>0{index + 1}</span><div className="capability-visual"><CapabilityDiagram title={title} nodes={nodes} /></div><div className="capability-copy"><h3>{title}</h3><p>{body}</p></div></article>)}</Reveal>
       <CapabilityRailProgress />
       <Link className="text-link section-link" href="/services">Explore our services <ArrowRight /></Link>
     </section>
@@ -53,11 +54,11 @@ export function HomePage() {
 
     <section className="complexity-section section container">
       <SectionHeading eyebrow="Built for complexity" title="Simple to use. Built for complexity underneath." />
-      <div className="complexity-copy"><p>Real businesses are full of dependencies, exceptions, permissions, calculations, and edge cases.</p><p>Good operational software should hide unnecessary complexity from the people using it without ignoring the complexity the business actually depends on.</p><p>We design the interface and the underlying system together, so the software can stay clear while the business logic remains precise.</p></div>
+      <Reveal className="complexity-copy"><p>Real businesses are full of dependencies, exceptions, permissions, calculations, and edge cases.</p><p>Good operational software should hide unnecessary complexity from the people using it without ignoring the complexity the business actually depends on.</p><p>We design the interface and the underlying system together, so the software can stay clear while the business logic remains precise.</p></Reveal>
       <OperationMap />
     </section>
 
-    <section className="section container"><SectionHeading eyebrow="How we work" title="Understand the operation. Then build the system."><p>Custom software succeeds when the business is understood before the solution is decided.</p></SectionHeading><div className="process-grid">{[["Understand", "We learn how the operation works today: the people involved, information they use, rules they follow, exceptions they handle, and problems slowing them down."], ["Design", "We turn workflows into a clear system: what should happen, who should do it, what information is needed, and how the parts connect."], ["Build", "We implement the product around the real operation, including the business rules and edge cases generic software often cannot represent."], ["Evolve", "Once software becomes part of daily operations, the business continues to change. We can maintain and evolve the system as requirements appear."]].map(([title, body], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{body}</p></article>)}</div></section>
+    <section className="section container"><SectionHeading eyebrow="How we work" title="Understand the operation. Then build the system."><p>Custom software succeeds when the business is understood before the solution is decided.</p></SectionHeading><Reveal className="process-grid">{[["Understand", "We learn how the operation works today: the people involved, information they use, rules they follow, exceptions they handle, and problems slowing them down."], ["Design", "We turn workflows into a clear system: what should happen, who should do it, what information is needed, and how the parts connect."], ["Build", "We implement the product around the real operation, including the business rules and edge cases generic software often cannot represent."], ["Evolve", "Once software becomes part of daily operations, the business continues to change. We can maintain and evolve the system as requirements appear."]].map(([title, body], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{body}</p></article>)}</Reveal></section>
 
     <section className="technology section container"><SectionHeading eyebrow="Engineering" title="Modern software, chosen for the problem."><p>We use modern web technologies and proven engineering tools, choosing the architecture around the needs of the product rather than forcing every project into the same stack.</p></SectionHeading><ArchitectureVisual /><strong>The technology is important. The business outcome is the point.</strong></section>
     <FinalCta title="Your business already has a system." body="It might just be made of spreadsheets, messages, and manual work. If important parts of your operation have outgrown the tools holding them together, let's talk about what a system built around the business could look like." />
@@ -65,7 +66,7 @@ export function HomePage() {
 }
 
 function OperationalSystemVisual() {
-  return <div className="hero-operation" aria-label="Fragmented operational information resolved into one structured request">
+  return <Reveal className="hero-operation" amount={0.1} aria-label="Fragmented operational information resolved into one structured request">
     <div className="hero-sources" aria-label="Fragmented sources">
       <div className="source-card source-card--sheet">
         <header>Spreadsheet <span>#024</span></header>
@@ -108,7 +109,7 @@ function OperationalSystemVisual() {
         <footer><span>Team 2 · Ready</span><span>Payment verified</span></footer>
       </div>
     </div>
-  </div>;
+  </Reveal>;
 }
 function FragmentedToConnected() {
   return <>
@@ -135,5 +136,5 @@ function CapabilityDiagram({ title }) {
     {type === "integrations" && <div className="micro-demo integration-demo"><div className="external-tags"><span>Email</span><span>Payment</span><span>Existing ERP</span></div><div className="event-list"><header>Custom system</header><p>09:21 <span>Payment received</span></p><p>09:22 <span>Record updated</span></p><p>09:22 <span>Confirmation sent</span></p></div></div>}
   </>;
 }
-function OperationMap() { return <div className="assignment-check"><div className="assign-action"><header>ASSIGN</header><p>Vehicle <span>Bus 12</span></p><p>Driver <span>D. Williams</span></p><button>Assign</button></div><div className="validation-stack"><p>✓ Driver available</p><p>✓ Vehicle available</p><p>✓ Capacity valid</p><p>✓ No schedule conflict</p></div><footer><i /> Assignment created</footer></div>; }
-function ArchitectureVisual() { return <div className="architecture-visual"><div><strong>Interfaces</strong><span>Customer · Employee · Operations</span></div><div><strong>Application</strong><span>Product logic · APIs</span></div><div><strong>Business rules</strong><span>Workflows · Validation</span></div><div><strong>Data &amp; integrations</strong><span>Database · External services</span></div><aside>{["TypeScript", "React", "Next.js", "Python", "PostgreSQL"].map((item) => <span key={item}>{item}</span>)}</aside></div>; }
+function OperationMap() { return <Reveal className="assignment-check"><div className="assign-action"><header>ASSIGN</header><p>Vehicle <span>Bus 12</span></p><p>Driver <span>D. Williams</span></p><button>Assign</button></div><div className="validation-stack"><p>✓ Driver available</p><p>✓ Vehicle available</p><p>✓ Capacity valid</p><p>✓ No schedule conflict</p></div><footer><i /> Assignment created</footer></Reveal>; }
+function ArchitectureVisual() { return <Reveal className="architecture-visual"><div><strong>Interfaces</strong><span>Customer · Employee · Operations</span></div><div><strong>Application</strong><span>Product logic · APIs</span></div><div><strong>Business rules</strong><span>Workflows · Validation</span></div><div><strong>Data &amp; integrations</strong><span>Database · External services</span></div><aside>{["TypeScript", "React", "Next.js", "Python", "PostgreSQL"].map((item) => <span key={item}>{item}</span>)}</aside></Reveal>; }
