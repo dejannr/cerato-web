@@ -16,9 +16,9 @@ function useRevealTransition() {
   };
 }
 
-export function PageHero({ eyebrow, title, children, primary = true }) {
+export function PageHero({ eyebrow, title, children, primary = true, className = "" }) {
   const reveal = useRevealTransition();
-  return <motion.section className="page-hero container" initial={reveal.initial} animate={reveal.whileInView} transition={{ duration: motionTokens.duration.md, ease: motionTokens.ease.out }}><p className="eyebrow">{eyebrow}</p><h1>{title}</h1>{children && <div className="page-hero-copy">{children}</div>}{primary && <Link className="button-primary" href="/contact">Start a project <ArrowUpRight /></Link>}</motion.section>;
+  return <motion.section className={`page-hero container ${className}`} initial={reveal.initial} animate={reveal.whileInView} transition={{ duration: motionTokens.duration.md, ease: motionTokens.ease.out }}><p className="eyebrow">{eyebrow}</p><h1>{title}</h1>{children && <div className="page-hero-copy">{children}</div>}{primary && <Link className="button-primary" href="/contact">Start a project <ArrowUpRight /></Link>}</motion.section>;
 }
 
 export function SectionHeading({ eyebrow, title, children }) {
