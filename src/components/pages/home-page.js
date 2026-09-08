@@ -92,6 +92,20 @@ function OperationalSystemVisual() {
       </div>
       <HeroActivity />
     </div>
+    <div className="hero-mobile-operation" aria-hidden="true">
+      <div className="hero-mobile-fragments">
+        <div><header>Spreadsheet <span>#024</span></header><p>M. Parker<br /><em>Pending</em></p></div>
+        <div><header>Message <span>#024</span></header><p>Move booking<br />to 08:30?</p></div>
+        <div><header>Note <span>#024</span></header><p>Call driver<br />Check payment</p></div>
+      </div>
+      <div className="hero-mobile-cue"><i /> <i /> <b /></div>
+      <div className="hero-mobile-request">
+        <header>REQUEST #024 <span>Updated</span></header>
+        <p>M. Parker</p>
+        <p>Tomorrow · 08:30</p>
+        <footer><span>Team 2 · Ready</span><span>Payment verified</span></footer>
+      </div>
+    </div>
   </div>;
 }
 function FragmentedToConnected() { return <div className="duplicate-record"><div className="duplicate-windows"><div><header>Spreadsheet</header><strong>ORDER 184</strong><p>Thursday<br />09:00<br /><em>Pending</em></p></div><div><header>Message</header><p>Order 184 changed<br />to <strong>10:30</strong></p></div><div><header>Notes</header><strong>ORDER 184</strong><p><em>09:00 ?</em><br />confirm time</p></div></div><p className="duplicate-warning">3 sources · 2 different times</p><div className="clean-record"><header>ORDER 184 <b>Confirmed</b></header><p>Thursday · 10:30</p></div></div>; }
