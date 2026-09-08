@@ -108,7 +108,16 @@ function OperationalSystemVisual() {
     </div>
   </div>;
 }
-function FragmentedToConnected() { return <div className="duplicate-record"><div className="duplicate-windows"><div><header>Spreadsheet</header><strong>ORDER 184</strong><p>Thursday<br />09:00<br /><em>Pending</em></p></div><div><header>Message</header><p>Order 184 changed<br />to <strong>10:30</strong></p></div><div><header>Notes</header><strong>ORDER 184</strong><p><em>09:00 ?</em><br />confirm time</p></div></div><p className="duplicate-warning">3 sources · 2 different times</p><div className="clean-record"><header>ORDER 184 <b>Confirmed</b></header><p>Thursday · 10:30</p></div></div>; }
+function FragmentedToConnected() {
+  return <>
+    <div className="duplicate-record duplicate-record--desktop"><div className="duplicate-windows"><div><header>Spreadsheet</header><strong>ORDER 184</strong><p>Thursday<br />09:00<br /><em>Pending</em></p></div><div><header>Message</header><p>Order 184 changed<br />to <strong>10:30</strong></p></div><div><header>Notes</header><strong>ORDER 184</strong><p><em>09:00 ?</em><br />confirm time</p></div></div><p className="duplicate-warning">3 sources · 2 different times</p><div className="clean-record"><header>ORDER 184 <b>Confirmed</b></header><p>Thursday · 10:30</p></div></div>
+    <div className="problem-mobile-visual" aria-hidden="true">
+      <div className="problem-mobile-fragments"><div><header><span className="fragment-full">Spreadsheet</span><span className="fragment-short">Sheet</span></header><p>Thu · 09:00<br /><em>Pending</em></p></div><div><header>Message</header><p>Changed to<br /><strong>10:30</strong></p></div><div><header>Notes</header><p><em>09:00?</em><br />confirm</p></div></div>
+      <p className="problem-mobile-warning">3 sources · 2 different times</p>
+      <div className="problem-mobile-result"><header>ORDER 184 <b>Confirmed</b></header><p>Thursday · 10:30</p></div>
+    </div>
+  </>;
+}
 function CapabilityDiagram({ title }) {
   const type = title.startsWith("Operational") ? "operations" : title.startsWith("Business") ? "automation" : title.startsWith("Customer") ? "perspectives" : "integrations";
   return <>
