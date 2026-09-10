@@ -24,5 +24,17 @@ export const caseStudies = [{
   ],
   outcome: { eyebrow: "The outcome", heading: "The business moved from fragmented tools to one operational system.", body: ["The platform is now live in production and continues to support the company's day-to-day operation.", "Passenger information, routes, departures, fleet resources, driver workflows, trip records, financial reconciliation, ticket control, and reporting no longer need to live across the same collection of spreadsheets, messages, calculations, and disconnected processes that existed before.", "The most important change is operational leverage.", "Work that previously required the owner and staff to manually connect information across different tools can now happen through structured workflows inside one system. Management has better visibility into what is happening, stronger control over operational and financial records, and a more reliable foundation for running the business.", "For the owner in particular, the system reduces the amount of repetitive operational coordination that has to be carried personally, creating more room to focus on the company rather than continuously holding its processes together."], bullets: ["One connected operational system", "Live in daily production", "Public booking connected to back-office operations", "Centralized passenger, route, fleet, driver, and trip data", "Structured trip and financial reconciliation", "Stronger visibility and operational control", "Less dependence on manual coordination", "Software maintained and extended as the operation evolves"] },
   closing: { eyebrow: "What this project represents", heading: "Custom software is most valuable when the business has outgrown generic tools.", body: ["This project is not valuable because transportation companies need another booking application.", "It is valuable because the business had developed its own operational rules, exceptions, responsibilities, and ways of working — and the tools around it were no longer enough to manage that complexity cleanly.", "Cerato Systems turned those workflows into software built around the operation.", "That is the kind of problem we are built to solve."] }
+}, {
+  slug: "case-study-coming-soon",
+  status: "placeholder",
+  featured: false,
+  title: "Case study coming soon",
+  industry: "Coming soon",
+  summary: "Another Cerato Systems customer story will be shared here soon.",
+  coverLabel: "CASE STUDY COMING SOON",
+  facts: [],
+  sections: [],
+  outcome: null,
+  closing: null,
 }];
 export const getCaseStudy = (slug) => caseStudies.find((study) => study.slug === slug);

@@ -50,7 +50,7 @@ export function HomePage() {
       <Link className="text-link section-link" href="/services">Explore our services <ArrowRight /></Link>
     </section>
 
-    <section className="featured-work section"><div className="container"><SectionHeading eyebrow="Customer work" title="Built for real operations."><p>The best way to understand our work is to see what changed for the businesses using it.</p></SectionHeading><div className="case-grid">{caseStudies.map((study) => <CaseStudyCard study={study} key={study.slug} />)}</div><Link className="text-link section-link" href="/customers">View all customers <ArrowRight /></Link></div></section>
+    <section className="featured-work section"><div className="container"><SectionHeading eyebrow="Customer work" title="Built for real operations."><p>The best way to understand our work is to see what changed for the businesses using it.</p></SectionHeading><div className="case-grid">{caseStudies.filter((study) => study.featured !== false).map((study) => <CaseStudyCard study={study} key={study.slug} />)}</div><Link className="text-link section-link" href="/customers">View all customers <ArrowRight /></Link></div></section>
 
     <section className="complexity-section section container">
       <SectionHeading eyebrow="Built for complexity" title="Simple to use. Built for complexity underneath." />
