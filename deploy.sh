@@ -1,57 +1,52 @@
 #!/usr/bin/env bash
-# Deploy the current project to the Cerato production droplet.
-# The root password is requested at runtime and is never written to disk.
+# Commit, push, and deploy the current project to the Cerato production droplet.
+# The server pulls from GitHub; application files are never copied over SSH.
 
 set -euo pipefail
 
 SERVER_HOST="165.227.150.59"
 SERVER_USER="root"
-REMOTE_ARCHIVE="/tmp/cerato-web-deploy.tar.gz"
 REMOTE_APP_DIR="/var/www/cerato-web"
-LOCAL_ARCHIVE="$(mktemp "${TMPDIR:-/tmp}/cerato-web-deploy.XXXXXX.tar.gz")"
+REPOSITORY="https://github.com/dejannr/cerato-web.git"
+BRANCH="$(git branch --show-current)"
+COMMIT_MESSAGE="${1:-Deploy $(date '+%Y-%m-%d %H:%M:%S')}"
 
-cleanup() {
-  rm -f "$LOCAL_ARCHIVE"
-  unset DEPLOY_PASSWORD
-}
-trap cleanup EXIT
-
-for command in npm tar scp ssh expect; do
+for command in git npm ssh expect; do
   command -v "$command" >/dev/null || {
     echo "Required command not found: $command" >&2
     exit 1
   }
 done
 
-echo "Building locally to verify the production build..."
+if [[ -z "$BRANCH" ]]; then
+  echo "Cannot deploy from a detached Git HEAD." >&2
+  exit 1
+fi
+
+echo "Verifying the production build locally..."
 npm run build
 
-echo "Packaging application source..."
-COPYFILE_DISABLE=1 tar \
-  --exclude='./.git' \
-  --exclude='./.next' \
-  --exclude='./node_modules' \
-  --exclude='./.DS_Store' \
-  --exclude='./.env' \
-  --exclude='./.env.*' \
-  -czf "$LOCAL_ARCHIVE" .
+if [[ -n "$(git status --porcelain)" ]]; then
+  echo "Committing local changes..."
+  git add --all
+  git commit -m "$COMMIT_MESSAGE"
+fi
+
+echo "Pushing ${BRANCH} to GitHub..."
+git push origin "$BRANCH"
 
 read -r -s -p "Root password for ${SERVER_HOST}: " DEPLOY_PASSWORD
 echo
-export DEPLOY_PASSWORD
-export DEPLOY_ARCHIVE="$LOCAL_ARCHIVE"
-export DEPLOY_HOST="$SERVER_HOST"
-export DEPLOY_USER="$SERVER_USER"
-export REMOTE_ARCHIVE REMOTE_APP_DIR
+export DEPLOY_PASSWORD SERVER_HOST SERVER_USER REMOTE_APP_DIR REPOSITORY BRANCH
 
 expect <<'EXPECT'
 set timeout -1
 set password $env(DEPLOY_PASSWORD)
-set archive $env(DEPLOY_ARCHIVE)
-set host $env(DEPLOY_HOST)
-set user $env(DEPLOY_USER)
-set remote_archive $env(REMOTE_ARCHIVE)
-set remote_app_dir $env(REMOTE_APP_DIR)
+set host $env(SERVER_HOST)
+set user $env(SERVER_USER)
+set app_dir $env(REMOTE_APP_DIR)
+set repository $env(REPOSITORY)
+set branch $env(BRANCH)
 
 proc authenticate {} {
   global password
@@ -63,20 +58,16 @@ proc authenticate {} {
   }
   catch wait result
   if {[lindex $result 3] != 0} {
-    puts stderr "Remote command failed."
+    puts stderr "Remote deployment failed."
     exit [lindex $result 3]
   }
 }
 
-puts "Uploading source archive..."
-spawn scp -o StrictHostKeyChecking=accept-new $archive "$user@$host:$remote_archive"
-authenticate
-
-puts "Installing dependencies, building, and restarting the service..."
-set deploy_command "set -eu; install -d -o cerato -g cerato $remote_app_dir; tar -xzf $remote_archive -C $remote_app_dir; chown -R cerato:cerato $remote_app_dir; cd $remote_app_dir; runuser -u cerato -- npm ci; runuser -u cerato -- npm run build; systemctl restart cerato-web; rm -f $remote_archive; systemctl is-active --quiet cerato-web"
+puts "Pulling from GitHub, building, and restarting the service..."
+set deploy_command [format {set -eu; install -d -o cerato -g cerato %s; cd %s; fresh_checkout=0; old_lock=$(sha256sum package-lock.json 2>/dev/null | awk '{print $1}' || true); if [ ! -d .git ]; then fresh_checkout=1; git init -q; git remote add origin %s; git clean -fdx -e .env -e .env.*; fi; git fetch --quiet origin %s; git checkout -q -B %s origin/%s; git reset --hard origin/%s; git clean -fd -e .env -e .env.*; new_lock=$(sha256sum package-lock.json | awk '{print $1}'); if [ "$fresh_checkout" = 1 ] || [ "$old_lock" != "$new_lock" ] || [ ! -d node_modules ]; then runuser -u cerato -- npm ci; fi; chown -R cerato:cerato %s; runuser -u cerato -- npm run build; systemctl restart cerato-web; systemctl is-active --quiet cerato-web} $app_dir $app_dir $repository $branch $branch $branch $branch $app_dir]
 spawn ssh -o StrictHostKeyChecking=accept-new "$user@$host" $deploy_command
 authenticate
 EXPECT
 
-unset DEPLOY_ARCHIVE DEPLOY_HOST DEPLOY_USER
+unset DEPLOY_PASSWORD
 echo "Deployment complete: https://cerato.online"
