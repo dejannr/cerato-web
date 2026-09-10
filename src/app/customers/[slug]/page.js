@@ -31,7 +31,7 @@ export default function CaseStudyPage({ params }) {
 
 function CaseVisual({ visual, hero = false }) {
   if (!visual) return null;
-  return <Reveal className={`case-visual ${hero ? "case-visual--hero" : ""}`}><PlaceholderVisual label={visual.label} /><p>{visual.caption}</p></Reveal>;
+  return <Reveal className={`case-visual ${hero ? "case-visual--hero" : ""}`}>{visual.image ? <div className="case-screenshot"><img src={visual.image} alt={visual.alt || visual.label} /></div> : <PlaceholderVisual label={visual.label} />}{visual.caption && <p>{visual.caption}</p>}</Reveal>;
 }
 
 function CaseBlock({ eyebrow, heading, body, callout, capabilities, bullets, groups, subheading, supportingCopy, visual, technologies, ownership, closing, outcome = false }) {
