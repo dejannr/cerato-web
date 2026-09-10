@@ -35,5 +35,5 @@ export function PlaceholderVisual({ label, className = "" }) { return <div class
 
 export function CaseStudyCard({ study }) {
   const reveal = useRevealTransition();
-  return <motion.article className="case-card" {...reveal}><PlaceholderVisual label={`CASE STUDY / ${study.slug.replaceAll("-", " ")}`} /><div className="case-card-copy"><p className="eyebrow">{study.industry}</p><h3>{study.title}</h3><p>{study.summary}</p><Link className="text-link" href={`/customers/${study.slug}`}>Read case study <ArrowRight /></Link></div></motion.article>;
+  return <motion.article className="case-card" {...reveal}><PlaceholderVisual label={study.coverLabel || `CASE STUDY / ${study.slug.replaceAll("-", " ")}`} /><div className="case-card-copy"><p className="eyebrow">{study.industry}</p><h3>{study.title}</h3><p>{study.summary}</p>{study.cardFacts?.length > 0 && <ul className="case-card-facts">{study.cardFacts.map((fact) => <li key={fact}>{fact}</li>)}</ul>}<Link className="text-link" href={`/customers/${study.slug}`}>Read case study <ArrowRight /></Link></div></motion.article>;
 }
