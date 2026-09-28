@@ -5,14 +5,16 @@ import { FinalCta } from "@/components/shared/site-components";
 import { Reveal } from "@/components/shared/reveal";
 
 export function generateStaticParams() { return caseStudies.map(({ slug }) => ({ slug })); }
-export function generateMetadata({ params }) {
-  const study = getCaseStudy(params.slug);
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const study = getCaseStudy(slug);
   if (!study) return {};
   return { title: study.meta?.title || `${study.title} — Cerato Systems`, description: study.meta?.description || study.summary, openGraph: { title: study.meta?.ogTitle || study.title, description: study.meta?.ogDescription || study.summary } };
 }
 
-export default function CaseStudyPage({ params }) {
-  const study = getCaseStudy(params.slug);
+export default async function CaseStudyPage({ params }) {
+  const { slug } = await params;
+  const study = getCaseStudy(slug);
   if (!study) notFound();
   return <>
     <article className="case-study container">
