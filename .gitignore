@@ -10,3 +10,4 @@ yarn-error.log*
 # local IDE and virtual environment files
 /.idea
 /.venv
+/pw
