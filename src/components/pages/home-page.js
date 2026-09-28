@@ -43,7 +43,7 @@ export function HomePage() {
     </section>
 
     <section className="section container">
-      <SectionHeading eyebrow="What we build" title="Software for the work between systems."><p>We build custom tools, integrations, and automation for logistics and transportation operations that need people, documents, workflows, and existing systems to work together.</p></SectionHeading>
+      <SectionHeading eyebrow="What we build" title="Custom systems for logistics operations."><p>We build custom tools, integrations, and automation for logistics and transportation operations that need people, documents, workflows, and systems to work together.</p></SectionHeading>
       <Reveal className="capability-grid" id="capability-rail" tabIndex={0} aria-label="What we build capabilities; swipe or scroll horizontally on mobile">{capabilities.map(([title, body, nodes], index) => <article className="capability" key={title}><span>0{index + 1}</span><div className="capability-visual"><CapabilityDiagram title={title} nodes={nodes} /></div><div className="capability-copy"><h3>{title}</h3><p>{body}</p></div></article>)}</Reveal>
       <CapabilityRailProgress />
       <Link className="text-link section-link" href="/services">Explore our services <ArrowRight /></Link>
