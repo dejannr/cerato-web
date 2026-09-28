@@ -30,7 +30,7 @@ export function HomePage() {
     <section className="problem-section container section">
       <Reveal className="problem-rail"><p className="eyebrow">The operational gap</p></Reveal>
       <Reveal className="problem-main">
-        <h2>Your logistics operation already has software. The manual work is often between the systems.</h2>
+        <h2>When systems don&apos;t connect, people fill the gaps.</h2>
         <div className="problem-lower">
           <div className="problem-content">
             <p>Most logistics companies already use a TMS, ERP, CRM, accounting software, email, spreadsheets, and customer or carrier tools.</p>
