@@ -47,17 +47,5 @@ export const caseStudies = [{
   ],
   outcome: { eyebrow: "The outcome", heading: "A shared operational picture, without the paperwork chase.", body: ["Navixor replaces fragmented operational records with one system that can be used in the field and understood in the office.", "Instead of waiting for documents to travel, chasing people for updates, or reconstructing reports from past records, teams can work from current information connected to the site, machine, worker, and company it belongs to.", "The result is not just digitized paperwork. It is a more reliable way to run a distributed operation."], bullets: ["Faster site-log capture and approval", "Better visibility across sites and machinery", "Less manual reporting and reconciliation", "Focused role-based workflows", "A foundation for integrations and automation"] },
   closing: { eyebrow: "What this project represents", heading: "Custom software works when it fits the work people actually do.", body: ["Navixor is not an off-the-shelf product. It is an example of how Cerato Systems approaches operational complexity: understand where the information is created, who needs it, where the chain breaks, and what should happen next.", "That approach applies wherever people work across locations, depend on approvals, and spend too much time holding disconnected tools together."] }
-}, {
-  slug: "case-study-coming-soon",
-  status: "placeholder",
-  featured: false,
-  title: "Case study coming soon",
-  industry: "Coming soon",
-  summary: "Another Cerato Systems customer story will be shared here soon.",
-  coverLabel: "CASE STUDY COMING SOON",
-  facts: [],
-  sections: [],
-  outcome: null,
-  closing: null,
 }];
 export const getCaseStudy = (slug) => caseStudies.find((study) => study.slug === slug);

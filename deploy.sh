@@ -72,4 +72,4 @@ authenticate
 EXPECT
 
 unset DEPLOY_PASSWORD
-echo "Deployment complete: https://cerato.online"
+echo "Deployment complete: https://ceratosystems.com"
