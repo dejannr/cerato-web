@@ -7,10 +7,10 @@ import { HeroActivity } from "@/components/home/hero-activity";
 import { CapabilityRailProgress } from "@/components/home/capability-rail-progress";
 
 const capabilities = [
-  ["Operational platforms", "Bring people, workflows, business rules, and operational data into one purpose-built system.", ["People", "Workflows", "Business rules", "Operational data"]],
-  ["Business process automation", "Replace repetitive manual work with structured workflows that make important processes easier to follow and control.", ["Input", "Rules", "Validation", "Action", "Record"]],
-  ["Customer and employee applications", "Connect customers, employees, field teams, and management to the same underlying operation.", ["Customer", "Employee", "Field team", "Manager"]],
-  ["Integrations and connected systems", "Connect existing tools and services without creating another disconnected silo.", ["Existing system A", "Existing system B", "External service", "Internal database"]],
+  ["Logistics workflow automation", "Automate the handoffs, checks, and follow-up work that keep shipments moving.", ["RFQ", "Rules", "Validation", "Action", "Record"]],
+  ["Document & data automation", "Turn documents and incoming data into reliable operational records without repeated entry.", ["Documents", "Data", "Extraction", "Validation"]],
+  ["TMS, ERP & CRM integrations", "Connect the systems your team already relies on so information moves with the operation.", ["TMS", "ERP", "CRM", "Carrier"]],
+  ["Custom logistics software", "Build the focused workflows your operation needs when off-the-shelf systems leave gaps.", ["Shipment", "Team", "Rules", "Visibility"]],
 ];
 
 const complexity = ["Scheduling", "Assignments", "Permissions", "Validation", "Capacity", "Pricing", "Financial reconciliation", "Reporting", "Integrations", "Offline workflows", "Notifications", "Document generation"];
@@ -19,24 +19,23 @@ export function HomePage() {
   return <>
     <section className="home-hero container">
       <div className="home-hero-copy">
-        <p className="eyebrow"><span className="status-dot" />Custom software solutions</p>
-        <h1>Software built around <em>how your business works.</em></h1>
-        <p>Your business has its own workflows, rules, exceptions, and ways of getting things done. We turn complex operations into custom software that brings the work together.</p>
+        <p className="eyebrow"><span className="status-dot" />Logistics, freight &amp; transportation software</p>
+        <h1>Software built around <em>how your logistics operation works.</em></h1>
+        <p>We build custom software, workflow automation, and integrations for logistics, freight, and transportation companies — connecting the manual work between your people, documents, customers, and existing systems.</p>
         <div className="cta-group"><Link className="button-primary" href="/contact">Start a project <ArrowUpRight /></Link><Link className="button-secondary" href="/customers">See our work</Link></div>
       </div>
       <OperationalSystemVisual />
     </section>
 
     <section className="problem-section container section">
-      <Reveal className="problem-rail"><p className="eyebrow">The problem</p></Reveal>
+      <Reveal className="problem-rail"><p className="eyebrow">The operational gap</p></Reveal>
       <Reveal className="problem-main">
-        <h2>Your business shouldn&apos;t run on workarounds.</h2>
+        <h2>Your logistics operation already has software. The manual work is often between the systems.</h2>
         <div className="problem-lower">
           <div className="problem-content">
-            <p>Spreadsheets, messages, repeated entry, manual calculations, and generic tools that almost fit.</p>
-            <p>They can work for a while. But as the business grows, the workarounds become part of the problem.</p>
-            <p>Important processes become harder to control. Information fragments, work is repeated, and decisions depend on finding the right message, spreadsheet, or person.</p>
-            <strong>We turn those workflows into software.</strong>
+            <p>Most logistics companies already use a TMS, ERP, CRM, accounting software, email, spreadsheets, and customer or carrier tools.</p>
+            <p>The problem is rarely that nothing exists. It is that people still copy information, check documents, update customers, reconcile records, and move data from one system to another.</p>
+            <strong>Keep the systems that work. Automate the work between them.</strong>
           </div>
           <FragmentedToConnected />
         </div>
@@ -44,13 +43,13 @@ export function HomePage() {
     </section>
 
     <section className="section container">
-      <SectionHeading eyebrow="What we build" title="Systems designed around the operation."><p>We build software for businesses whose processes are too important, too specific, or too complex to keep forcing into generic tools.</p></SectionHeading>
+      <SectionHeading eyebrow="What we build" title="Software for the work between systems."><p>We build custom tools, integrations, and automation for logistics and transportation operations that need people, documents, workflows, and existing systems to work together.</p></SectionHeading>
       <Reveal className="capability-grid" id="capability-rail" tabIndex={0} aria-label="What we build capabilities; swipe or scroll horizontally on mobile">{capabilities.map(([title, body, nodes], index) => <article className="capability" key={title}><span>0{index + 1}</span><div className="capability-visual"><CapabilityDiagram title={title} nodes={nodes} /></div><div className="capability-copy"><h3>{title}</h3><p>{body}</p></div></article>)}</Reveal>
       <CapabilityRailProgress />
       <Link className="text-link section-link" href="/services">Explore our services <ArrowRight /></Link>
     </section>
 
-    <section className="featured-work section"><div className="container"><SectionHeading eyebrow="Customer work" title="Built for real operations."><p>The best way to understand our work is to see what changed for the businesses using it.</p></SectionHeading><div className="case-grid">{caseStudies.map((study) => <CaseStudyCard study={study} key={study.slug} />)}</div><Link className="text-link section-link" href="/customers">View all customers <ArrowRight /></Link></div></section>
+    <section className="featured-work section"><div className="container"><SectionHeading eyebrow="Customer work" title="Built for real transportation and field operations."><p>Our work starts with the reality of how an operation runs day to day — including the exceptions, dependencies, and coordination work that generic software often misses.</p></SectionHeading><div className="case-grid">{caseStudies.map((study) => <CaseStudyCard study={study} key={study.slug} />)}</div><Link className="text-link section-link" href="/customers">View all customers <ArrowRight /></Link></div></section>
 
     <section className="complexity-section section container">
       <SectionHeading eyebrow="Built for complexity" title="Simple to use. Built for complexity underneath." />
@@ -61,7 +60,7 @@ export function HomePage() {
     <section className="section container how-we-work"><SectionHeading eyebrow="How we work" title="Understand the operation. Then build the system."><p>Custom software succeeds when the business is understood before the solution is decided.</p></SectionHeading><Reveal className="process-grid">{[["Understand", "We learn how the operation works today: the people involved, information they use, rules they follow, exceptions they handle, and problems slowing them down."], ["Design", "We turn workflows into a clear system: what should happen, who should do it, what information is needed, and how the parts connect."], ["Build", "We implement the product around the real operation, including the business rules and edge cases generic software often cannot represent."], ["Evolve", "Once software becomes part of daily operations, the business continues to change. We can maintain and evolve the system as requirements appear."]].map(([title, body], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{body}</p></article>)}</Reveal></section>
 
     <section className="technology section container"><SectionHeading eyebrow="Engineering" title="Modern software, chosen for the problem."><p>We use modern web technologies and proven engineering tools, choosing the architecture around the needs of the product rather than forcing every project into the same stack.</p></SectionHeading><ArchitectureVisual /><strong>The technology is important. The business outcome is the point.</strong></section>
-    <FinalCta title="Your business already has a system." body="It might just be made of spreadsheets, messages, and manual work. If important parts of your operation have outgrown the tools holding them together, let's talk about what a system built around the business could look like." />
+    <FinalCta title="Your operation is already connected by people. We help connect it with software." body="If your team spends too much time moving information between systems, checking documents, updating customers, or working around software that does not fit, let’s talk about where automation could help." />
   </>;
 }
 
@@ -122,7 +121,7 @@ function FragmentedToConnected() {
   </>;
 }
 function CapabilityDiagram({ title }) {
-  const type = title.startsWith("Operational") ? "operations" : title.startsWith("Business") ? "automation" : title.startsWith("Customer") ? "perspectives" : "integrations";
+  const type = title.startsWith("Logistics") ? "operations" : title.startsWith("Document") ? "automation" : title.startsWith("Custom") ? "perspectives" : "integrations";
   return <>
     <div className={`mobile-capability-demo mobile-capability-demo--${type}`} aria-hidden="true">
       {type === "operations" && <><header>TODAY</header><div><time>08:30</time><span>Delivery</span><b>Assigned</b></div><div className="is-active"><time>09:10</time><span>Installation</span><b>Team 2</b></div><div><time>10:45</time><span>Pickup</span><b>Assigned</b></div></>}

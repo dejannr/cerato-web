@@ -4,7 +4,7 @@ import { useState } from "react";
 import { trackEvent } from "@/lib/analytics";
 import { ArrowUpRight } from "@untitledui/icons/ArrowUpRight";
 
-const contexts = ["Internal operations", "Process automation", "Customer application", "Employee / field application", "Integrations", "Existing custom software", "Not sure yet"];
+const contexts = ["Freight forwarding", "Transportation operations", "Workflow automation", "Document processing", "TMS / ERP / CRM integration", "Customer portal", "Internal operations platform", "Not sure yet"];
 
 export function ContactForm() {
   const [status, setStatus] = useState("idle");
@@ -33,7 +33,7 @@ export function ContactForm() {
       <label><span className="field-label">Company website</span><input name="website" type="url" autoComplete="url" placeholder="company.com" /></label>
     </div>
     <fieldset><legend>Project context</legend><div className="context-options">{contexts.map((context) => <label key={context}><input type="checkbox" name="context" value={context} /><span>{context}</span></label>)}</div></fieldset>
-    <label><span className="field-label">What are you trying to improve? <b aria-hidden="true">*</b></span><textarea name="message" required placeholder="Tell us about the workflow, process, or operational problem you want to improve. What are you using today, and what is no longer working?" /></label>
+    <label><span className="field-label">What workflow are you trying to improve? <b aria-hidden="true">*</b></span><textarea name="message" required placeholder="For example: preparing freight quotes, processing shipment documents, updating customers, moving data between systems, dispatch coordination, or replacing spreadsheets and manual work." /></label>
     {status === "success" && <p className="form-success" role="status">Thanks — your message has been received. We&apos;ll get back to you as soon as we can.</p>}
     {status === "error" && <p className="form-error" role="alert">Something went wrong while sending your message. Please try again or contact us by email. <span>PLACEHOLDER: COMPANY EMAIL</span></p>}
     <button className="button-primary" type="submit" disabled={status === "sending"}>{status === "sending" ? "Sending…" : "Send project inquiry"} <ArrowUpRight /></button>
