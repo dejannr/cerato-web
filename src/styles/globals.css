@@ -186,3 +186,4 @@ body{background:radial-gradient(circle at 50% -18%,rgba(94,106,210,.09),transpar
 @media(min-width:768px){.case-study-intro{max-width:none}.case-study-intro h1,.case-study-intro .case-summary{max-width:none}}
 .case-visual--phone .case-screenshot{display:flex;min-height:0;justify-content:center}.case-visual--phone .case-screenshot img{width:auto;max-width:100%;max-height:640px;object-fit:contain}@media(max-width:767px){.case-split .case-visual--phone .case-screenshot img{max-height:62svh}}
 .case-block--split .case-list{grid-template-columns:1fr}
+.contact-honeypot{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}

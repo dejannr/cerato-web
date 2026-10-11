@@ -16,8 +16,10 @@ export function ContactForm() {
     if (!form.checkValidity()) { form.reportValidity(); return; }
     setStatus("sending");
     try {
-      const response = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(Object.fromEntries(new FormData(form))) });
-      if (!response.ok) throw new Error("Delivery unavailable");
+      const formData = new FormData(form);
+      const response = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...Object.fromEntries(formData), context: formData.getAll("context") }) });
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.error || "Delivery unavailable");
       setStatus("success");
       trackEvent("contact_form_submitted");
       form.reset();
@@ -25,7 +27,7 @@ export function ContactForm() {
   }
 
   return <form className="contact-form" onSubmit={submit} onFocus={() => { if (!started) { setStarted(true); trackEvent("contact_form_started"); } }}>
-    <p className="form-note">PLACEHOLDER: CONTACT FORM DELIVERY</p>
+    <label className="contact-honeypot" aria-hidden="true"><span>Company site</span><input name="companySite" tabIndex={-1} autoComplete="off" /></label>
     <div className="form-grid">
       <label><span className="field-label">Your name <b aria-hidden="true">*</b></span><input name="name" autoComplete="name" placeholder="Jane Smith" required /></label>
       <label><span className="field-label">Work email <b aria-hidden="true">*</b></span><input name="email" type="email" autoComplete="email" placeholder="jane@company.com" required /></label>
@@ -35,7 +37,7 @@ export function ContactForm() {
     <fieldset><legend>Project context</legend><div className="context-options">{contexts.map((context) => <label key={context}><input type="checkbox" name="context" value={context} /><span>{context}</span></label>)}</div></fieldset>
     <label><span className="field-label">What workflow are you trying to improve? <b aria-hidden="true">*</b></span><textarea name="message" required placeholder="For example: preparing freight quotes, processing shipment documents, updating customers, moving data between systems, dispatch coordination, or replacing spreadsheets and manual work." /></label>
     {status === "success" && <p className="form-success" role="status">Thanks — your message has been received. We&apos;ll get back to you as soon as we can.</p>}
-    {status === "error" && <p className="form-error" role="alert">Something went wrong while sending your message. Please try again or contact us by email. <span>PLACEHOLDER: COMPANY EMAIL</span></p>}
+    {status === "error" && <p className="form-error" role="alert">Something went wrong while sending your message. Please try again shortly.</p>}
     <button className="button-primary" type="submit" disabled={status === "sending"}>{status === "sending" ? "Sending…" : "Send project inquiry"} <ArrowUpRight /></button>
   </form>;
 }
