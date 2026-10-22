@@ -1,4 +1,3 @@
-import nodemailer from "nodemailer";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -35,20 +34,6 @@ function isRateLimited(ip) {
   return entry.count > RATE_LIMIT_MAX_REQUESTS;
 }
 
-function getTransporter() {
-  const user = process.env.PURELYMAIL_USER;
-  const pass = process.env.PURELYMAIL_PASSWORD;
-
-  if (!user || !pass) return null;
-
-  return nodemailer.createTransport({
-    host: "smtp.purelymail.com",
-    port: 465,
-    secure: true,
-    auth: { user, pass },
-  });
-}
-
 export async function POST(request) {
   const ip = getClientIp(request);
 
@@ -71,32 +56,45 @@ export async function POST(request) {
   const { name, email, company, website, context, message, companySite } = result.data;
   if (companySite) return NextResponse.json({ success: true });
 
-  const transporter = getTransporter();
-  const sender = process.env.PURELYMAIL_USER;
+  const apiKey = process.env.RESEND_API_KEY;
+  const sender = process.env.CONTACT_SENDER;
   const recipient = process.env.CONTACT_RECIPIENT;
 
-  if (!transporter || !sender || !recipient) {
-    console.error("Contact form delivery is missing SMTP environment variables.");
+  if (!apiKey || !sender || !recipient) {
+    console.error("Contact form delivery is missing Resend environment variables.");
     return NextResponse.json({ error: "Unable to send your message right now. Please try again later." }, { status: 503 });
   }
 
   try {
-    await transporter.sendMail({
-      from: { name: "Andrija Ilic", address: sender },
-      to: recipient,
-      replyTo: { name, address: email },
-      subject: `New website inquiry from ${name}`,
-      text: [
-        `Name: ${name}`,
-        `Email: ${email}`,
-        `Company: ${company}`,
-        website ? `Website: ${website}` : null,
-        context.length ? `Project context: ${context.join(", ")}` : null,
-        "",
-        "Message:",
-        message,
-      ].filter(Boolean).join("\n"),
+    const resendResponse = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: `Cerato Systems Website <${sender}>`,
+        to: [`Andrija Ilic <${recipient}>`],
+        reply_to: `${name} <${email}>`,
+        subject: `New website inquiry from ${name}`,
+        text: [
+          `Name: ${name}`,
+          `Email: ${email}`,
+          `Company: ${company}`,
+          website ? `Website: ${website}` : null,
+          context.length ? `Project context: ${context.join(", ")}` : null,
+          "",
+          "Message:",
+          message,
+        ].filter(Boolean).join("\n"),
+      }),
+      cache: "no-store",
     });
+
+    if (!resendResponse.ok) {
+      console.error("Contact form delivery failed:", await resendResponse.text());
+      return NextResponse.json({ error: "Unable to send your message right now. Please try again later." }, { status: 500 });
+    }
   } catch (error) {
     console.error("Contact form delivery failed:", error);
     return NextResponse.json({ error: "Unable to send your message right now. Please try again later." }, { status: 500 });
