@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import { headers } from "next/headers";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 
@@ -10,6 +11,7 @@ export const metadata = {
   twitter: { card: "summary_large_image", images: ["/og-placeholder.svg"] },
 };
 
-export default function RootLayout({ children }) {
-  return <html lang="en"><body><SiteHeader /><main>{children}</main><SiteFooter /></body></html>;
+export default async function RootLayout({ children }) {
+  const isDemo = (await headers()).get("x-cerato-demo") === "1";
+  return <html lang="en"><body>{isDemo ? children : <><SiteHeader /><main>{children}</main><SiteFooter /></>}</body></html>;
 }
